@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<button id="btn">弹出</button>
+	<script>
+		var btn=document.getElementById("btn");
+		function showMsg(obj){
+			this.obj=obj;
+			this.xuran()
+			this.clear1()
+			this.quxiao()
+			
+		}
+		showMsg.prototype={
+			constructor:showMsg,
+			xuran:function(){
+				this.box=document.createElement("div");
+				this.box.id="box";
+				document.body.appendChild(this.box);
+				this.mark=document.createElement("div");
+				this.mark.id="mark";
+				this.box.appendChild(this.mark);
+				this.mark.innerHTML=`<div class="clear">&times;</div><h3>${this.obj.title}</h3><p>${this.obj.content}</p><p><button id="btn1">${this.obj.buttons[0]}</button><button id="btn2">${this.obj.buttons[1]}</button></p>`;
+
+			},
+			clear1:function(){
+				var clear=document.getElementsByClassName("clear")[0];
+				var that=this;
+				clear.onclick=function(){
+					document.body.removeChild(that.box)
+				}
+			},
+			quxiao:function(){
+				var btn1=document.getElementById("btn1");
+				var btn2 = document.getElementById("btn2");
+				console.log(btn1);
+				var that = this;
+				btn1.onclick=function(){
+					document.body.removeChild(that.box)
+				}
+				btn2.onclick=function(){
+					document.body.removeChild(that.box)
+				}
+			}
+		}
+
+		btn.onclick=function(){
+			new showMsg({
+				title:"购物车",
+				content:"您确定要删除不购买了吗？",
+				buttons:["确认","取消"],
+				successCallback:function(){}, // 点击确认按钮的回调函数
+				cancelCallback:function(){
+					
+				} // 点击取消按钮的回调函数
+			})
+		}
+
+	</script>
+</body>
+</html>
